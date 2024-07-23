@@ -1,4 +1,4 @@
-package com.pcanabarro.url_shortener;
+package com.pcanabarro;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
