@@ -35,7 +35,7 @@ public class UrlController {
     @GetMapping("/all")
     public List<UrlResponse> getAllUrl() {
         List<Url> urls = urlService.getAllUrls();
-        List<UrlResponse> urlResponseList = new ArrayList<UrlResponse>();
+        List<UrlResponse> urlResponseList = new ArrayList<>();
 
         for (Url url : urls) {
             urlResponseList.add(new UrlResponse(url));
@@ -45,7 +45,14 @@ public class UrlController {
     }
 
     @PostMapping("/")
-    public Url createUrl(@RequestBody Url url) {
-        return urlService.createUrl(url);
+    public String createUrl(@RequestBody Url url) {
+        try {
+            System.out.println(url.toString());
+            urlService.createUrl(url);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "Url created" + url.toString();
     }
 }
