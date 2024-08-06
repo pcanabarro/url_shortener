@@ -1,4 +1,4 @@
-package com.pcanabarro.responses;
+package com.pcanabarro.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pcanabarro.entity.Url;
@@ -7,14 +7,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UrlResponse {
+public class UrlResponseDTO {
+    @JsonProperty("id")
     Long id;
+
     @JsonProperty("original_url")
     String originalUrl;
+
     @JsonProperty("short_url")
     String shortUrl;
 
-    public UrlResponse(Url url) {
+    public UrlResponseDTO(Url url) {
         this.id = url.getId();
         this.originalUrl = url.getOriginalUrl();
         this.shortUrl = url.getShortUrl();

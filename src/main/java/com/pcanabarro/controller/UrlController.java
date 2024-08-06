@@ -1,7 +1,8 @@
 package com.pcanabarro.controller;
 
 import com.pcanabarro.entity.Url;
-import com.pcanabarro.responses.UrlResponse;
+import com.pcanabarro.request.UrlRequestDTO;
+import com.pcanabarro.response.UrlResponseDTO;
 import com.pcanabarro.service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,32 +28,26 @@ public class UrlController {
         return appName;
     }
 
-    @GetMapping("/{url}")
-    public String getUrl(@PathVariable String url) {
-        return "my url " + url;
-    }
-
     @GetMapping("/all")
-    public List<UrlResponse> getAllUrl() {
-        List<Url> urls = urlService.getAllUrls();
-        List<UrlResponse> urlResponseList = new ArrayList<>();
+    public List<UrlResponseDTO> getAllUrl() {
+        List<Url> allUrls = urlService.getAllUrls();
+        List<UrlResponseDTO> urlResponseList = new ArrayList<>();
 
-        for (Url url : urls) {
-            urlResponseList.add(new UrlResponse(url));
+        for (Url url : allUrls) {
+            urlResponseList.add(new UrlResponseDTO(url));
         }
 
         return urlResponseList;
     }
 
     @PostMapping("/")
-    public String createUrl(@RequestBody Url url) {
-        try {
-            System.out.println(url.toString());
-            urlService.createUrl(url);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return e.getMessage();
+    public String createUrl(@RequestBody UrlRequestDTO urlRequestDTO) {
+        if (!urlRequestDTO.isValid()) {
+            return "Invalid POST request!";
         }
-        return "Url created" + url.toString();
+        Url urlToSave = new Url(urlRequestDTO);
+        urlService.createUrl(urlToSave);
+
+        return "Url created";
     }
 }
