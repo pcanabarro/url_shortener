@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RestController
@@ -40,11 +41,19 @@ public class UrlController {
         return urlResponseList;
     }
 
+    @GetMapping("/{id}")
+    public UrlResponseDTO getUrlById(@PathVariable Long id) {
+        Url url = urlService.getUrlById(id);
+
+        return new UrlResponseDTO(url);
+    }
+
     @PostMapping("/")
     public String createUrl(@RequestBody UrlRequestDTO urlRequestDTO) {
         if (!urlRequestDTO.isValid()) {
             return "Invalid POST request!";
         }
+        
         Url urlToSave = new Url(urlRequestDTO);
         urlService.createUrl(urlToSave);
 

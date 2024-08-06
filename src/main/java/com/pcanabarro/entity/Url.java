@@ -18,7 +18,7 @@ public class Url {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "original_url")
     private String originalUrl;

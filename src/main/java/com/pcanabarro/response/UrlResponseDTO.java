@@ -2,14 +2,18 @@ package com.pcanabarro.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pcanabarro.entity.Url;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UrlResponseDTO {
     @JsonProperty("id")
-    Long id;
+    long id;
 
     @JsonProperty("original_url")
     String originalUrl;
