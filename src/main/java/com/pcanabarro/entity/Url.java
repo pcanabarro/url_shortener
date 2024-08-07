@@ -1,7 +1,8 @@
 package com.pcanabarro.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pcanabarro.request.RandomUrlRequestDTO;
 import com.pcanabarro.request.UrlRequestDTO;
+import com.pcanabarro.utils.RandomString;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,5 +30,10 @@ public class Url {
     public Url(UrlRequestDTO urlRequestDTO) {
         this.originalUrl =  urlRequestDTO.getOriginalUrl();
         this.shortUrl = urlRequestDTO.getShortUrl();
+    }
+
+    public Url(RandomUrlRequestDTO randomUrlRequestDTO) {
+        this.originalUrl =  randomUrlRequestDTO.getOriginalUrl();
+        this.shortUrl = RandomString.generateRandomString(5);
     }
 }

@@ -1,6 +1,7 @@
 package com.pcanabarro.controller;
 
 import com.pcanabarro.entity.Url;
+import com.pcanabarro.request.RandomUrlRequestDTO;
 import com.pcanabarro.request.UrlRequestDTO;
 import com.pcanabarro.response.UrlResponseDTO;
 import com.pcanabarro.service.UrlService;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RestController
@@ -51,12 +51,24 @@ public class UrlController {
     @PostMapping("/")
     public String createUrl(@RequestBody UrlRequestDTO urlRequestDTO) {
         if (!urlRequestDTO.isValid()) {
-            return "Invalid POST request!";
+            return "Invalid POST request creating url!";
         }
-        
+
         Url urlToSave = new Url(urlRequestDTO);
         urlService.createUrl(urlToSave);
 
         return "Url created";
+    }
+
+    @PostMapping("/random")
+    public String createRandomUrl(@RequestBody RandomUrlRequestDTO randomUrlRequestDTO) {
+        if (!randomUrlRequestDTO.isValid()) {
+            return "Invalid POST request creating random url!";
+        }
+
+        Url urlToSave = new Url(randomUrlRequestDTO);
+        urlService.createUrl(urlToSave);
+
+        return "Url created, your shortcut is " + urlToSave.getShortUrl();
     }
 }
