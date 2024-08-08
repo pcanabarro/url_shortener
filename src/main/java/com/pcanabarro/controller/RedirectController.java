@@ -1,10 +1,15 @@
 package com.pcanabarro.controller;
 
 import com.pcanabarro.entity.Url;
+import com.pcanabarro.response.ErrorResponseDTO;
 import com.pcanabarro.service.UrlService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.net.URI;
 
 @Component
 @RestController
@@ -22,9 +27,16 @@ public class RedirectController {
     }
 
     @GetMapping("/{shortcut}")
-    public RedirectView getShortcut(@PathVariable String shortcut) {
+    public ResponseEntity<?> getShortcut(@PathVariable String shortcut) {
         Url url = urlService.getUrlByShortUrl(shortcut);
 
-        return new RedirectView(url.getOriginalUrl());
+        if (url == null) {
+            ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, "Url Not Found", shortcut);
+            return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
+        }
+
+        URI redirectUri = URI.create(url.getOriginalUrl());
+
+        return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();
     }
 }
