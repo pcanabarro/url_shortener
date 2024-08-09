@@ -42,9 +42,7 @@ public class UrlController {
         List<Url> allUrls = urlService.getAllUrls();
         List<UrlResponseDTO> urlResponseList = new ArrayList<>();
 
-        for (Url url : allUrls) {
-            urlResponseList.add(new UrlResponseDTO(url));
-        }
+        allUrls.forEach(url -> urlResponseList.add(new UrlResponseDTO(url)));
 
         return ResponseEntity.status(HttpStatus.OK).body(urlResponseList);
     }
@@ -93,11 +91,9 @@ public class UrlController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUrl(@PathVariable long id) {
-        if (urlService.deleteUrl(id)) {
-            return "Url ID: " + id + " deleted";
-        }
+    public ResponseEntity<String> deleteUrl(@PathVariable long id) {
+        urlService.deleteUrl(id);
 
-        return "Error while deleting URL! Please check your id";
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Url with id " + id + " was deleted");
     }
 }

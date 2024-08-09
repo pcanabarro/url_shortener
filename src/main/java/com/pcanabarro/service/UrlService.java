@@ -21,7 +21,13 @@ public class UrlService {
     }
 
     public Url getUrlById(long id) {
-        return urlRepository.findById(id);
+        Url url = urlRepository.findById(id);
+
+        if (url == null) {
+            throw new UrlNotFoundException("Cannot find url with id " + id);
+        }
+
+        return url;
     }
 
     public Url getUrlByShortUrl(String shortUrl) {
@@ -51,14 +57,13 @@ public class UrlService {
         urlRepository.save(url);
     }
 
-    public boolean deleteUrl(long id) {
+    public void deleteUrl(long id) {
         Url url = urlRepository.findById(id);
 
         if (url == null) {
-            return false;
+            throw new UrlNotFoundException("Cannot find url with id: " + id);
         }
 
         urlRepository.delete(url);
-        return true;
     }
 }
