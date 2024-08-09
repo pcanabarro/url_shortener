@@ -2,7 +2,6 @@ package com.pcanabarro.controller;
 
 import com.pcanabarro.entity.Url;
 import com.pcanabarro.exception.UrlNotFoundException;
-import com.pcanabarro.response.ErrorResponseDTO;
 import com.pcanabarro.service.UrlService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class RedirectController {
         Url url = urlService.getUrlByShortUrl(shortcut);
 
         if (url == null) {
-            throw new UrlNotFoundException(404 ,"Url Not Found: " + shortcut);
+            throw new UrlNotFoundException(HttpStatus.NOT_FOUND + shortcut);
         }
 
         URI redirectUri = URI.create(url.getOriginalUrl());

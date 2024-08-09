@@ -23,6 +23,9 @@ public class UrlController {
     @Value("${app.name}")
     private String appName;
 
+    @Value("${app.router}")
+    private String appRouter;
+
 
     @GetMapping("/")
     public String getUrl() {
@@ -57,7 +60,7 @@ public class UrlController {
         Url urlToSave = new Url(urlRequestDTO);
         urlService.createUrl(urlToSave);
 
-        return "Url created";
+        return "URL created, your shortcut is" + appRouter + urlToSave.getShortUrl();
     }
 
     @PostMapping("/random")
@@ -69,6 +72,6 @@ public class UrlController {
         Url urlToSave = new Url(randomUrlRequestDTO);
         urlService.createUrl(urlToSave);
 
-        return "Url created, your shortcut is " + urlToSave.getShortUrl();
+        return "Random URL created, your shortcut is " + appRouter + urlToSave.getShortUrl();
     }
 }
