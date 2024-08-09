@@ -2,6 +2,7 @@ package com.pcanabarro.service;
 
 import com.pcanabarro.entity.Url;
 import com.pcanabarro.repository.UrlRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +29,29 @@ public class UrlService {
 
     public void createUrl(Url url) {
         urlRepository.save(url);
+    }
+
+    public Url updateUrl(Url urlToUpdate) {
+        Url url = urlRepository.findById(urlToUpdate.getId());
+
+        if (url == null) {
+            throw new EntityNotFoundException("Url id not found");
+        }
+
+        url.setOriginalUrl(urlToUpdate.getOriginalUrl());
+        url.setShortUrl(urlToUpdate.getShortUrl());
+
+        return urlRepository.save(url);
+    }
+
+    public boolean deleteUrl(long id) {
+        Url url = urlRepository.findById(id);
+
+        if (url == null) {
+            return false;
+        }
+
+        urlRepository.delete(url);
+        return true;
     }
 }
