@@ -1,13 +1,11 @@
 package com.pcanabarro.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pcanabarro.entity.Url;
 import com.pcanabarro.request.RandomUrlRequestDTO;
 import com.pcanabarro.request.UrlRequestDTO;
 import com.pcanabarro.request.UrlUpdateRequestDTO;
 import com.pcanabarro.response.UrlResponseDTO;
 import com.pcanabarro.service.UrlService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/url")
 public class UrlController {
-    @Autowired
-    private UrlService urlService;
+    private final UrlService urlService;
 
     @Value("${app.name}")
     private String appName;
@@ -31,13 +28,17 @@ public class UrlController {
     private String appRouter;
 
 
+    public UrlController(UrlService urlService) {
+        this.urlService = urlService;
+    }
+
     @GetMapping("/")
-    public String getUrl() {
-        return appName;
+    public ResponseEntity<String> getUrl() {
+        return ResponseEntity.status(HttpStatus.OK).body(appName);
     }
 
     @GetMapping("/all")
-    public List<UrlResponseDTO> getAllUrl() {
+    public ResponseEntity<List<UrlResponseDTO>> getAllUrl() {
         List<Url> allUrls = urlService.getAllUrls();
         List<UrlResponseDTO> urlResponseList = new ArrayList<>();
 
@@ -45,14 +46,14 @@ public class UrlController {
             urlResponseList.add(new UrlResponseDTO(url));
         }
 
-        return urlResponseList;
+        return ResponseEntity.status(HttpStatus.OK).body(urlResponseList);
     }
 
     @GetMapping("/{id}")
-    public UrlResponseDTO getUrlById(@PathVariable Long id) {
+    public ResponseEntity<UrlResponseDTO> getUrlById(@PathVariable Long id) {
         Url url = urlService.getUrlById(id);
 
-        return new UrlResponseDTO(url);
+        return ResponseEntity.status(HttpStatus.OK).body(new UrlResponseDTO(url));
     }
 
     @PostMapping("/")
@@ -85,7 +86,6 @@ public class UrlController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        // TODO: Manipulate wrong id
         Url urlToUpdate = new Url(urlUpdateRequestDTO);
         urlService.updateUrl(urlToUpdate);
 
