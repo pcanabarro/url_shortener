@@ -10,7 +10,7 @@ To create a new URL, send a `POST` request to the following endpoint:
 
       ```json
       {
-        "originalUrl": "https://github.com/pcanabarro/"
+        "original_url": "https://github.com/pcanabarro/"
       }
       ```
 
@@ -30,8 +30,8 @@ To retrieve details of a URLs, send a `GET` request to:
       ```json
       {
         "id": 1,
-        "originalUrl": "https://github.com/pcanabarro/",
-        "shortUrl": "git"
+        "original_url": "https://github.com/pcanabarro/",
+        "short_url": "git"
       }
       ```
 
