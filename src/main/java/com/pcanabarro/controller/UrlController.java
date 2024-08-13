@@ -54,7 +54,7 @@ public class UrlController {
         return ResponseEntity.status(HttpStatus.OK).body(new UrlResponseDTO(url));
     }
 
-    @GetMapping("/a/{id}")
+    @GetMapping("/query/{id}")
     public ResponseEntity<UrlResponseDTO> getUrlByIdQuery(@PathVariable Long id) {
         Url url = urlService.getUrlByIdQuery(id);
 
