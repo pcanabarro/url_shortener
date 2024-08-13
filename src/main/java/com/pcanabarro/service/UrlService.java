@@ -30,6 +30,16 @@ public class UrlService {
         return url;
     }
 
+    public Url getUrlByIdQuery(long id) {
+        Url url = urlRepository.findByIdQuery(id);
+
+        if (url == null) {
+            throw new UrlNotFoundException("Cannot find url with id " + id);
+        }
+
+        return url;
+    }
+
     public Url getUrlByShortUrl(String shortUrl) {
         List<Url> urls = urlRepository.findByShortUrl(shortUrl);
 

@@ -54,6 +54,13 @@ public class UrlController {
         return ResponseEntity.status(HttpStatus.OK).body(new UrlResponseDTO(url));
     }
 
+    @GetMapping("/a/{id}")
+    public ResponseEntity<UrlResponseDTO> getUrlByIdQuery(@PathVariable Long id) {
+        Url url = urlService.getUrlByIdQuery(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new UrlResponseDTO(url));
+    }
+
     @PostMapping("/")
     public String createUrl(@RequestBody UrlRequestDTO urlRequestDTO) {
         if (!urlRequestDTO.isValid()) {
