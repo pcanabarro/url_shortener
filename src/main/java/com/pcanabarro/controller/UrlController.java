@@ -6,6 +6,8 @@ import com.pcanabarro.request.UrlRequestDTO;
 import com.pcanabarro.request.UrlUpdateRequestDTO;
 import com.pcanabarro.response.UrlResponseDTO;
 import com.pcanabarro.service.UrlService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import java.util.List;
 public class UrlController {
     private final UrlService urlService;
 
+    Logger logger = LoggerFactory.getLogger(UrlController.class);
+
     @Value("${app.name}")
     private String appName;
 
@@ -34,6 +38,7 @@ public class UrlController {
 
     @GetMapping("/")
     public ResponseEntity<String> getUrl() {
+        logger.info("Get url called");
         return ResponseEntity.status(HttpStatus.OK).body(appName);
     }
 
@@ -64,6 +69,7 @@ public class UrlController {
     @PostMapping("/")
     public String createUrl(@RequestBody UrlRequestDTO urlRequestDTO) {
         if (!urlRequestDTO.isValid()) {
+            logger.error("Error creating url at {}", urlRequestDTO);
             return "Invalid POST request creating url!";
         }
 
@@ -76,6 +82,7 @@ public class UrlController {
     @PostMapping("/random")
     public String createRandomUrl(@RequestBody RandomUrlRequestDTO randomUrlRequestDTO) {
         if (!randomUrlRequestDTO.isValid()) {
+            logger.error("Error creating random url at {}", randomUrlRequestDTO);
             return "Invalid POST request creating random url!";
         }
 
@@ -88,6 +95,7 @@ public class UrlController {
     @PutMapping("/")
     public ResponseEntity<UrlResponseDTO> updateUrl(@RequestBody UrlUpdateRequestDTO urlUpdateRequestDTO) {
         if (!urlUpdateRequestDTO.isValid()) {
+            logger.error("Error updating url at {}", urlUpdateRequestDTO);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 

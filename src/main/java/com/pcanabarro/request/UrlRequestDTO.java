@@ -3,8 +3,10 @@ package com.pcanabarro.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class UrlRequestDTO {
     @JsonProperty("original_url")
     @Column(name = "original_url")
