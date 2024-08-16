@@ -108,6 +108,7 @@ public class UrlController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUrl(@PathVariable long id) {
         urlService.deleteUrl(id);
+        log.error("Url {} was deleted successfully ", id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Url with id " + id + " was deleted");
     }
