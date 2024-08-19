@@ -8,7 +8,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: spring
-      MYSQL_USER: root
       MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
