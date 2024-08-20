@@ -7,7 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"com.pcanabarro.controller", "com.pcanabarro.service", "com.pcanabarro.exception"})
+@ComponentScan({"com.pcanabarro.controller", "com.pcanabarro.service", "com.pcanabarro.exception",
+		"com.pcanabarro.aspect"})
 @EntityScan("com.pcanabarro.entity")
 @EnableJpaRepositories("com.pcanabarro.repository")
 public class UrlShortenerApplication {
