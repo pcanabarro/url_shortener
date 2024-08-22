@@ -19,7 +19,7 @@ services:
     container_name: spring-boot-app
     restart: always
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - mysql
     environment:
