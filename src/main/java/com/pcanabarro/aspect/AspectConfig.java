@@ -16,4 +16,6 @@ public class AspectConfig {
     public void beforeAdvice(JoinPoint joinPoint) {
         log.info("Logging that you're been redirected");
     }
+
+    // Set here a prefix on errors log using APP_NAME
 }
