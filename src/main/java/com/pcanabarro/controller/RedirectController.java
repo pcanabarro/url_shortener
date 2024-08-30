@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RestController
@@ -17,6 +19,7 @@ import java.net.URI;
 public class RedirectController {
     private static final Logger log = LoggerFactory.getLogger(RedirectController.class);
     private final UrlService urlService;
+    public static final List<String> redirectList = new ArrayList<>();
 
     public RedirectController(UrlService urlService) {
         this.urlService = urlService;
@@ -24,7 +27,7 @@ public class RedirectController {
 
     @GetMapping
     public ResponseEntity<String> index() {
-        return ResponseEntity.status(HttpStatus.OK).body("Hello World");
+        return ResponseEntity.status(HttpStatus.OK).body("Hello World" + redirectList);
     }
 
     @GetMapping("/{shortcut}")
@@ -37,6 +40,8 @@ public class RedirectController {
         }
 
         URI redirectUri = URI.create(url.getOriginalUrl());
+
+        redirectList.add(url.getOriginalUrl());
 
         return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();
     }

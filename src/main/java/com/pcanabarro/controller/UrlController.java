@@ -67,29 +67,32 @@ public class UrlController {
     }
 
     @PostMapping("/")
-    public String createUrl(@RequestBody UrlRequestDTO urlRequestDTO) {
+    public ResponseEntity<String> createUrl(@RequestBody UrlRequestDTO urlRequestDTO) {
         if (!urlRequestDTO.isValid()) {
             log.error("Error creating url at {}", urlRequestDTO);
-            return "Invalid POST request creating url!";
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid POST request creating url!");
         }
 
         Url urlToSave = new Url(urlRequestDTO);
         urlService.createUrl(urlToSave);
 
-        return "URL created, your shortcut is " + appRouter + urlToSave.getShortUrl();
+        return ResponseEntity.status(HttpStatus.CREATED).body("URL created, your shortcut is " +
+                appRouter + urlToSave.getShortUrl());
     }
 
     @PostMapping("/random")
-    public String createRandomUrl(@RequestBody RandomUrlRequestDTO randomUrlRequestDTO) {
+    public ResponseEntity<String> createRandomUrl(@RequestBody RandomUrlRequestDTO randomUrlRequestDTO) {
         if (!randomUrlRequestDTO.isValid()) {
             log.error("Error creating random url at {}", randomUrlRequestDTO);
-            return "Invalid POST request creating random url!";
+
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid POST request creating random url!");
         }
 
         Url urlToSave = new Url(randomUrlRequestDTO);
         urlService.createUrl(urlToSave);
 
-        return "Random URL created, your shortcut is " + appRouter + urlToSave.getShortUrl();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Random URL created, your shortcut is " +
+                appRouter + urlToSave.getShortUrl());
     }
 
     @PutMapping("/")
