@@ -19,7 +19,7 @@ import java.util.List;
 public class RedirectController {
     private static final Logger log = LoggerFactory.getLogger(RedirectController.class);
     private final UrlService urlService;
-    public static final List<String> redirectList = new ArrayList<>();
+    public static List<String> redirectList = new ArrayList<>();
 
     public RedirectController(UrlService urlService) {
         this.urlService = urlService;
