@@ -1,8 +1,14 @@
-FROM openjdk:22-jdk
+
+FROM gradle:7.6.1-jdk21 as build
 WORKDIR /app
-COPY build/libs/url_shortener-0.1.0-alpha.jar /app/url_shortener-0.1.0-alpha.jar
+COPY build.gradle settings.gradle ./
+COPY gradle/ gradle/
+COPY src/ ./src/
+RUN gradle build --no-daemon
+
+FROM amazoncorretto:21.0.3
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
 EXPOSE 8081
-ENV SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/spring
-ENV SPRING_DATASOURCE_USERNAME=root
-ENV SPRING_DATASOURCE_PASSWORD=root
 ENTRYPOINT ["java", "-jar", "/app/url_shortener-0.1.0-alpha.jar"]
+
