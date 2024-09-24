@@ -6,9 +6,9 @@ public class RandomString {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final SecureRandom RANDOM = new SecureRandom();
 
-    public static String generateRandomString() {
-        StringBuilder stringBuilder = new StringBuilder(5);
-        for (int i = 0; i < 5; i++) {
+    public static String generateRandomString(int length) {
+        StringBuilder stringBuilder = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
             int index = RANDOM.nextInt(CHARACTERS.length());
             stringBuilder.append(CHARACTERS.charAt(index));
         }

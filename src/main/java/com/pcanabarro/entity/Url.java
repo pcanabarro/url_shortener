@@ -35,9 +35,7 @@ public class Url {
 
     public Url(RandomUrlRequestDTO randomUrlRequestDTO) {
         this.originalUrl =  randomUrlRequestDTO.getOriginalUrl();
-        this.shortUrl = RandomString.generateRandomString();
-        System.out.println(this.originalUrl + " " + this.shortUrl);
-
+        this.shortUrl = RandomString.generateRandomString(5);
     }
 
     public Url(UrlUpdateRequestDTO urlUpdateRequestDTO) {
