@@ -12,7 +12,6 @@ public class Scheduler {
 
     @Scheduled(cron = "0 0/1 * 1/1 * ?")
     public void redirectsReport() {
-        // TODO: Check if it is safe and best option
         log.info("Redirect report {}", RedirectController.redirectList);
         RedirectController.redirectList.clear();
     }

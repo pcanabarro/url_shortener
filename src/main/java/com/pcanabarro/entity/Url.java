@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "url")
 public class Url {
     @Id
@@ -26,9 +27,6 @@ public class Url {
     @Column(name = "short_url")
     private String shortUrl;
 
-    @Value("${random.shortcut.integer}")
-    private int shortcutInteger;
-
 
     public Url(UrlRequestDTO urlRequestDTO) {
         this.originalUrl =  urlRequestDTO.getOriginalUrl();
@@ -37,7 +35,9 @@ public class Url {
 
     public Url(RandomUrlRequestDTO randomUrlRequestDTO) {
         this.originalUrl =  randomUrlRequestDTO.getOriginalUrl();
-        this.shortUrl = RandomString.generateRandomString(shortcutInteger);
+        this.shortUrl = RandomString.generateRandomString();
+        System.out.println(this.originalUrl + " " + this.shortUrl);
+
     }
 
     public Url(UrlUpdateRequestDTO urlUpdateRequestDTO) {

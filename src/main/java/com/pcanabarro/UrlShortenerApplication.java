@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan({"com.pcanabarro.controller", "com.pcanabarro.service", "com.pcanabarro.exception",
-		"com.pcanabarro.aspect"})
+        "com.pcanabarro.configs"})
 @EntityScan("com.pcanabarro.entity")
 @EnableJpaRepositories("com.pcanabarro.repository")
 @EnableScheduling

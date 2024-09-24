@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 @Component
 @RestController
 @RequestMapping("/api/url")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UrlController {
     private final UrlService urlService;
 
@@ -89,7 +91,12 @@ public class UrlController {
         }
 
         Url urlToSave = new Url(randomUrlRequestDTO);
-        urlService.createUrl(urlToSave);
+        System.out.println(urlToSave.toString());
+        try {
+            urlService.createUrl(urlToSave);
+        } catch (Exception e) {
+            log.error("Error creating random url at {}", urlToSave.toString());
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Random URL created, your shortcut is " +
                 appRouter + urlToSave.getShortUrl());
